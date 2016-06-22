@@ -179,7 +179,9 @@ int CloseLoop (int cpureading,int dimmreading)
 	double pid [3] = {0};
 	int CPUvarible;
 	int DIMMvarible = 0;
-	
+	int CPU_Warning = 85;
+	int DIMM_Warning = 85;
+
 	int CPU_PWM_speed = 0;
 	static int CPU_PID_value = 0;
 	static int CPU_tracking_error = 0; 
@@ -244,6 +246,9 @@ int CloseLoop (int cpureading,int dimmreading)
 	else
 		Closeloopspeed = CPU_PWM_speed;
 
+	if((cpureading>=CPU_Warning)||(dimmreading>=DIMM_Warning))
+		Closeloopspeed = 100;
+
 	if(intergral_i == g_Sampling_N)
 		intergral_i = 0;
 }
@@ -256,7 +261,7 @@ int OpenLoop (int sensorreading)
 	float paramB= 2; 
 	float paramC= 0;
 	int Low_Amb = 20;
-	int Up_Amb = 40;
+	int Up_Amb = 38;
 
 	sensorreading=sensorreading-1;
 		
